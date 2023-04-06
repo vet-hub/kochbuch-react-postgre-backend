@@ -7,7 +7,7 @@ indexRouter.get('/', function(req, res) {
 	console.log('home redirect to /category');
 	// res.redirect('/category');
 	// res.redirect('/category/top-bewertet');
-	res.redirect('/categs/category/1');
+	res.redirect('/categs/category/Top bewertet');
  });
 
  module.exports = indexRouter;		// as '/' homepage in server.js
