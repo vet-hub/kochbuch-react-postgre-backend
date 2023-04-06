@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
+var cors = require('cors');
 
 require('dotenv').config();			// !!! for reading  .env
 const port = process.env.PORT || 8080;
 console.log('PORT', process.env.PORT);
 
+app.use(cors());		// Enable All CORS Requests
 
 app.listen(port, () => {
 	console.log(`listening on port ${port}`);
