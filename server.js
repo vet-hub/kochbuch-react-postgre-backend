@@ -5,18 +5,11 @@ require('dotenv').config();			// !!! for reading  .env
 const port = process.env.PORT || 8080;
 console.log('PORT', process.env.PORT);
 
-app.get('/', (req, res) => {
-	res.send('Hello World!');
-})
 
 app.listen(port, () => {
 	console.log(`listening on port ${port}`);
 })
 
-
-app.get('/', (req, res) => {
-	res.send('Hello World!')
-})
 
 /* 
 	express.Router  vs 	Basic routing
@@ -31,8 +24,10 @@ app.use("/api", userRouter)								// by /api -> router
 */
 
 /* 
-	zur Transparenz - all users-routes - require from /routes/users <- middlewares - from /controller/  
+	understanding - all users-routes - require from /routes/users <- middlewares - from /controller/users  
+*/
 
+/*
 	app.get('/users', async (req, res) => {
 		try {
 			// await is only valid in async functions
@@ -50,10 +45,30 @@ app.use("/api", userRouter)								// by /api -> router
 
 const pool = require('./dbclient');
 
+const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
-// users-routes 	- require from /routes/users 		<- middlewares - from /controller/users  
+const categRouter = require('./routes/categs');
+
+/* 
+app.get('/', (req, res) => {
+	res.send('from app.get('/') Hello World!')
+})
+
+// Why do we have to put api in front of routes?
 app.use('/api/users', userRouter);
 
-const categRouter = require('./routes/categs');
+*/
+
+
+// home page redirect
+app.use('/', indexRouter);
+
+// users-routes 	- require from /routes/users 		<- middlewares - from /controller/users  
+app.use('/users', userRouter);
+
 // categs-routes 	- require from /routes/categs		<- middlewares - from /controller/categs  
-app.use('/api/categs', categRouter);
+app.use('/categs', categRouter);
+
+app.use((req, res, next) => {
+	res.status(404).send("Sorry can't find that!")
+ })

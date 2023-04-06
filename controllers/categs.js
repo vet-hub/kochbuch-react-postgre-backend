@@ -10,6 +10,35 @@ const getCategs = async (req, res) => {
   }
 };
 
+
+
+const getOneCategResipes = async (req, res) => {
+	const { cate_name } = req.params;
+	// console.log('params:', req.params.cate_name);
+	try {
+		const { rows } = await pool.query(`
+			SELECT recipe.id, recipe.name, recipe.ingredients, recipe.image 
+				FROM recipe 
+				JOIN join_cat_rec ON recipe.id = join_cat_rec.rec_id 
+				JOIN category ON category.id = join_cat_rec.cat_id 
+				WHERE category.name = $1`, [cate_name]);
+				//console.log('rows', rows.length, terr, new Error().lineNumber);
+		if(rows.length) return res.json({ data: rows });
+		else return res.status(404).json({ message: 'not found!' });  // 	 res.status(404).json('not found' );
+ 
+	} catch (e) {
+	  res.status(404).json({ message: 'error!' });
+	}
+ };
+ 
+/*
+	SELECT * FROM recipe 
+	JOIN join_cat_rec ON recipe.id = join_cat_rec.rec_id 
+	WHERE join_cat_rec.cat_id = $1`, [id]);
+*/
+
+
+
 const getOneCateg = async (req, res) => {
   const { id } = req.params;
   try {
@@ -113,6 +142,7 @@ const setCategInactive = async (req, res) => {
 
 module.exports = {
   getCategs,
+  getOneCategResipes,
   getOneCateg,
   putCateg,
   deleteCateg,

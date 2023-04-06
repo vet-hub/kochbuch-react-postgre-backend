@@ -6,15 +6,18 @@ const categRouter = express.Router();
 
 const {
   getCategs,
+  getOneCategResipes,
   getOneCateg,
   putCateg,
   postCateg,
   deleteCateg,
-} = require('../controller/categs');
+} = require('../controllers/categs');
 
 categRouter.get('/', getCategs);
 
-categRouter.get('/:id', getOneCateg);
+// categRouter.get('/:id', getOneCateg);
+
+categRouter.get('/category/:cate_name', getOneCategResipes);
 
 categRouter.post('/', postCateg);   // ? express-validator
 
@@ -22,4 +25,4 @@ categRouter.delete('/:id', deleteCateg);
 
 categRouter.put('/:id', putCateg);
 
-module.exports = categRouter;		// as '/api/categ' in server.js
+module.exports = categRouter;		// as '/categ' in server.js

@@ -10,7 +10,7 @@ const {
   putUser,
   postUser,
   deleteUser,
-} = require('../controller/users');
+} = require('../controllers/users');
 
 userRouter.get('/', getUsers);
 
@@ -33,4 +33,4 @@ userRouter.delete('/:id', deleteUser);
 
 userRouter.put('/:id', putUser);
 
-module.exports = userRouter;		// as '/api/users' in server.js
+module.exports = userRouter;		// for '/users' in server.js
